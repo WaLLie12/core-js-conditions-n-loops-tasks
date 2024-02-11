@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,8 +38,22 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  let num = 0;
+  if (a > b && a > c) {
+    num += a;
+  }
+  if (a < b && b > c) {
+    num += b;
+  }
+  if (a < c && b < c) {
+    num += c;
+  }
+  if (a === b && b === c && c === a) {
+    return a;
+  }
+
+  return num;
 }
 
 /**
@@ -60,8 +74,12 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  return (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
+  );
 }
 
 /**
@@ -82,9 +100,18 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a <= 0 || b <= 0 || c <= 0 || a + b <= c || a + c <= b || b + c <= a) {
+    return false;
+  }
+
+  return (
+    a === b ||
+    a === c ||
+    b === c
+  );
 }
+
 
 /**
  * Converts a number to Roman numerals. The number will be between 1 and 39.
@@ -100,8 +127,28 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romanNumerals = {
+    1: 'I',
+    4: 'IV',
+    5: 'V',
+    9: 'IX',
+    10: 'X',
+    40: 'XL',
+    50: 'L',
+    90: 'XC',
+    100: 'C',
+  };
+
+  function convertRecursive(num, result = '') {
+    if (num === 0) return result;
+
+    const largestKey = Object.keys(romanNumerals).reverse().find((key) => num >= key);
+
+    return convertRecursive(num - largestKey, result + romanNumerals[largestKey]);
+  }
+
+  return convertRecursive(num);
 }
 
 /**
@@ -119,8 +166,40 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const digitWords = {
+    0: 'zero',
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six',
+    7: 'seven',
+    8: 'eight',
+    9: 'nine',
+    '.': 'point',
+  };
+
+  function convertChar(char) {
+    return digitWords[char] || '';
+  }
+
+  function convertRecursive(str, result = '') {
+    if (!str) return result;
+
+    const firstChar = str[0];
+
+    if (firstChar === '-') {
+      return convertRecursive(str.slice(1), 'minus ' + result)
+    } else if (digitWords[firstChar]) {
+      return convertRecursive(str.slice(1), convertChar(firstChar) + ' ' + result);
+    } else {
+      return convertRecursive(str.slice(1), result);
+    }
+  }
+
+  return convertRecursive(numberStr).replace(/  +/g, ' ').trim();
 }
 
 /**
@@ -135,8 +214,16 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  function checkPalindromeRecursive(leftIndex, rightIndex) {
+    if (leftIndex >= rightIndex) return true;
+
+    if (str[leftIndex] !== str[rightIndex]) return false;
+
+    return checkPalindromeRecursive(leftIndex + 1, rightIndex - 1);
+  }
+
+  return checkPalindromeRecursive(0, str.length - 1);
 }
 
 /**
@@ -153,8 +240,17 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let index = 0;
+
+  while (index < str.length) {
+    if (str[index] === letter) {
+      return index;
+    }
+    index++;
+  }
+
+  return -1;
 }
 
 /**
