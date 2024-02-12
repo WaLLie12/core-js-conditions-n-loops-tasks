@@ -519,12 +519,12 @@ function shuffleChar(str, iterations) {
     oddPositions.push(i);
   }
 
-  for (let i = 0; i < iterations; i +=1) {
+  for (let i = 0; i < iterations; i += 1) {
     const evenChars = chars.filter((_, index) => index % 2 === 0);
     const oddChars = chars.filter((_, index) => index % 2 !== 0);
     chars.splice(0, chars.length, ...evenChars, ...oddChars);
 
-    for (let j = 0; j < oddPositions.length; j +=1) {
+    for (let j = 0; j < oddPositions.length; j += 1) {
       oddPositions[j] += evenChars.length;
     }
   }
